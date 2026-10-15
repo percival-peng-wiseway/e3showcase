@@ -1,0 +1,189 @@
+{
+  "annual": [
+    {
+      "category": "Retail energy",
+      "before": 79622.02,
+      "after": 32686.94,
+      "reduction": 46935.08
+    },
+    {
+      "category": "Environmental charges",
+      "before": 16557.86,
+      "after": 8219.03,
+      "reduction": 8338.83
+    },
+    {
+      "category": "Network charge",
+      "before": 63629.01,
+      "after": 41523.71,
+      "reduction": 22105.300000000003
+    },
+    {
+      "category": "Critical Peak Demand",
+      "before": 26598.96,
+      "after": 2769.84,
+      "reduction": 23829.12
+    },
+    {
+      "category": "Market & regulated charges",
+      "before": 2722.38,
+      "after": 2362.01,
+      "reduction": 360.3699999999999
+    }
+  ],
+  "totalBefore": 189130.23,
+  "totalAfter": 87561.53,
+  "customerYearOneSaving": 19414,
+  "budget": [
+    {
+      "item": "Soft costs & statutory fees",
+      "amount": 48029.36
+    },
+    {
+      "item": "Solar PV system",
+      "amount": 319816.69
+    },
+    {
+      "item": "BESS system",
+      "amount": 249522.61
+    },
+    {
+      "item": "Civil works",
+      "amount": 37280.87
+    },
+    {
+      "item": "Delivery & other costs",
+      "amount": 13500
+    },
+    {
+      "item": "Contingency allowance",
+      "amount": 28310.15
+    },
+    {
+      "item": "Subsidy assumption",
+      "amount": -84284
+    }
+  ],
+  "timeline": [
+    [
+      "Oct 2026",
+      "2026年10月",
+      "Roof assessment",
+      "屋顶结构评估",
+      "Structural roof assessment",
+      "结构评估报告"
+    ],
+    [
+      "Oct–Nov 2026",
+      "2026年10–11月",
+      "Equipment selection",
+      "设备选型",
+      "Modules, BESS and inverters",
+      "组件、储能与逆变器"
+    ],
+    [
+      "Oct 2026–Jan 2027",
+      "2026年10月–2027年1月",
+      "Initial electrical design",
+      "初步电气设计",
+      "Preliminary design for approvals",
+      "支撑审批的初步设计"
+    ],
+    [
+      "Nov 2026",
+      "2026年11月",
+      "DNSP application",
+      "提交并网申请",
+      "Submit connection application",
+      "提交接入申请"
+    ],
+    [
+      "Review: 65 working days",
+      "审核：65个工作日",
+      "DNSP assessment",
+      "配网公司审核",
+      "Offer targeted for Jan 2027; date unconfirmed",
+      "目标2027年1月取得报价；日期待确认"
+    ],
+    [
+      "Jan 2027, post-offer",
+      "2027年1月，取得报价后",
+      "Procurement & detailed design",
+      "采购及详细设计",
+      "Order equipment and finalise civil/electrical design",
+      "设备采购及最终土建、电气设计"
+    ],
+    [
+      "Feb 2027",
+      "2027年2月",
+      "Civil works & PV",
+      "土建及光伏安装",
+      "Foundations, civil works and PV arrays",
+      "基础、土建及光伏阵列"
+    ],
+    [
+      "Mar 2027",
+      "2027年3月",
+      "BESS installation",
+      "储能安装",
+      "Install and integrate battery system",
+      "储能系统安装及集成"
+    ],
+    [
+      "Mar 2027",
+      "2027年3月",
+      "Commissioning & handover",
+      "调试及交付",
+      "Testing, commissioning and completion",
+      "测试、调试与竣工交付"
+    ]
+  ],
+  "indicativeReturns": {
+    "irrPercent": 17.7,
+    "simplePaybackYears": 6.3,
+    "basis": "Sponsor-confirmed project IRR 17.70% and simple payback 6.30 years already assume zero terminal residual value. No independent annual cash-flow recalculation in this edition.",
+    "assetHoldingPeriodYears": 15,
+    "irrType": "Project IRR",
+    "terminalResidualValue": 0,
+    "zeroResidualAlreadyIncluded": true,
+    "confirmedBy": "E3 / project sponsor"
+  },
+  "chapterOrder": [
+    "opportunity",
+    "returns",
+    "model",
+    "revenue",
+    "client",
+    "protections",
+    "site",
+    "system",
+    "reduction",
+    "capital",
+    "timeline",
+    "invoice"
+  ],
+  "yearOneBillGrowthPercent": 3,
+  "yearOneReferenceExGST": 194804.14,
+  "yearOneCustomerPaymentExGST": 175390.14,
+  "customerSavingExGST": true,
+  "postInstallationBillBasis": "Simulation using customer existing retail tariff; not E3 actual procurement cost",
+  "serviceScope": "Shell meter only",
+  "fixedRevenueShareApproxPercent": 30,
+  "supplyDelivery": "E3 directly or in cooperation with an electricity retailer",
+  "contract": {
+    "initialYears": 10,
+    "priorityRenewalYears": 5,
+    "renewalRightHolder": "E3",
+    "holdingCaseAssumesRenewal": true,
+    "giftToOwnerAtEndOfYear": 15
+  },
+  "terminalResidualValue": 0,
+  "spotReference": {
+    "region": "Victoria",
+    "quarter": "Q2 2026",
+    "audPerMWh": 60,
+    "audPerKWh": 0.06,
+    "measure": "Regional volume-weighted wholesale average; not project capture price or floor",
+    "source": "https://www.aer.gov.au/industry/wholesale/charts?page=1"
+  }
+}

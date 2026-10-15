@@ -1,0 +1,15 @@
+{
+  "name": "e3showcase",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "validate": "node scripts/validate-artifact.mjs",
+    "test": "npm run build && node scripts/test.mjs && node scripts/test-location.mjs && npm run validate",
+    "dev": "npm run build && node scripts/preview.mjs",
+    "start": "npm run build && node scripts/server.mjs"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}
