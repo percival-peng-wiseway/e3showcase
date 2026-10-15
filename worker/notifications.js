@@ -22,9 +22,9 @@ async function notifyLogin(env, visit) {
       from: env.LOGIN_NOTIFICATION_FROM,
       to: [LOGIN_NOTIFICATION_TO],
       cc: [LOGIN_NOTIFICATION_CC],
-      subject: 'E3 Showcase · New login / 新访客登录 · ' + visit.name,
+      subject: 'E3 Investment Platform · New login / 新访客登录 · ' + visit.name,
       text: [
-        'A visitor signed in to E3 Showcase. / 有访客登录 E3 Showcase。', '',
+        'A visitor signed in to E3 Investment Platform. / 有访客登录 E3 Investment Platform。', '',
         'Name / 姓名: ' + visit.name,
         'Login time / 登录时间 (Australia/Melbourne): ' + localTime,
         'Login time / 登录时间 (UTC): ' + visit.started_at,

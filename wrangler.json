@@ -1,5 +1,5 @@
 {
-  "name": "e3showcase",
+  "name": "e3-invest-platform",
   "main": "dist/_worker.js",
   "compatibility_date": "2026-10-15",
   "keep_vars": true,
@@ -8,14 +8,14 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "e3showcase-visitors",
-      "database_id": "c2f6d308-4906-4bb7-b14d-3bc6bf247867",
+      "database_name": "e3-invest-platform-visitors",
+      "database_id": "1338f7fd-e656-4e78-acc7-cb3508ba8cf7",
       "migrations_dir": "drizzle"
     }
   ],
   "routes": [
     {
-      "pattern": "latrobe-investers.e3energy.com.au",
+      "pattern": "invest.e3energy.com.au",
       "custom_domain": true
     }
   ]
