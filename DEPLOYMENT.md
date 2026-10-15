@@ -1,6 +1,10 @@
-# Cloudflare Pages handoff
+# Cloudflare deployment handoff
 
-The current source targets Cloudflare Pages, not the earlier Sites hosting workflow.
+The current source supports Cloudflare Pages and Cloudflare Workers.
+
+For the Workers **Create an app** workflow, set build command `npm run build` and deploy command `npx wrangler deploy`. The tracked `wrangler.json` points to the server entry `dist/_worker.js` and declares no static assets. Do not pass `--assets dist`. See README Workers setup for D1 binding configuration using your actual database ID.
+
+The Pages settings below remain available if you use **Continue to Pages**.
 
 Follow the complete setup in [README.md](README.md#cloudflare-pages-setup).
 

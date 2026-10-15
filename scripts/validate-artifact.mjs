@@ -26,4 +26,8 @@ assert.equal(
   `${pathToFileURL(workerPath)} must export default.fetch`,
 );
 
-console.log("Artifact is valid ESM and exports default.fetch");
+const workersConfig = JSON.parse(await readFile(resolve(projectRoot, 'wrangler.json'), 'utf8'));
+assert.equal(workersConfig.main, 'dist/_worker.js');
+assert.equal(workersConfig.assets, undefined, 'Protected Worker code must never be published as static assets');
+assert.equal(workersConfig.keep_vars, true);
+console.log("Artifact exports default.fetch; Workers deploys it as server code without public static assets");

@@ -1,0 +1,6 @@
+{
+  "name": "e3showcase",
+  "main": "dist/_worker.js",
+  "compatibility_date": "2026-10-15",
+  "keep_vars": true
+}

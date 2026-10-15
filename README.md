@@ -1,6 +1,36 @@
 # E3 Energy · Latrobe showcase
 
-Bilingual project presentation with a matching name-and-password login, server-side sessions, and private visitor records. Prepared for **Cloudflare Pages Advanced Mode** with a **Cloudflare D1** database. No npm dependencies are required.
+Bilingual project presentation with a matching name-and-password login, server-side sessions, and private visitor records. Supports **Cloudflare Pages Advanced Mode** and **Cloudflare Workers**, with a **Cloudflare D1** database. No npm dependencies are required.
+
+## Cloudflare Workers setup
+
+If Cloudflare shows **Create an app** with a **Deploy command**, you are using the Workers workflow. This is also supported:
+
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+- Root directory: repository root (leave blank or use `/`)
+- Do not add `--assets dist` to the deploy command.
+
+`wrangler.json` explicitly identifies `dist/_worker.js` as the **server entrypoint**. This application embeds its HTML and images in that module, so Workers needs no static assets directory. No server code is uploaded as public assets. Do not add an empty `.assetsignore` to bypass the error about uploading `_worker.js` as an asset.
+
+After the first successful upload, configure the same runtime secrets and D1 schema as below in the **Worker** settings. `keep_vars` preserves dashboard variables; encrypted secrets are also retained. A successful code upload alone does not configure the database or passwords.
+
+For persistent D1 bindings across subsequent Wrangler deployments, add the real database ID to `wrangler.json` (retain the existing fields):
+
+```json
+"d1_databases": [
+  {
+    "binding": "DB",
+    "database_name": "e3showcase-visitors",
+    "database_id": "REPLACE_WITH_YOUR_ACTUAL_D1_DATABASE_ID",
+    "migrations_dir": "drizzle"
+  }
+]
+```
+
+Get the actual ID from the D1 dashboard; do not deploy the placeholder. Apply the three SQL migrations once as described below. If a database is already initialized, apply only the migrations it does not have. Then configure `VIEWER_PASSWORD`, `ADMIN_PASSWORD`, `SESSION_SECRET`, and optionally the two Resend settings. The website returns `Service is not configured` until its required runtime settings exist.
+
+This fixes a Workers build that fails with **Uploading a Pages _worker.js file as an asset**. It does not require switching to Pages. If you prefer Pages, use the separate Pages setup below.
 
 ## Cloudflare Pages setup
 
@@ -83,7 +113,7 @@ npm run dev
 
 Preview: `http://127.0.0.1:8787`. Preview credentials are `e3open` for visitors and `preview-admin-only` for administrators. Preview uses an in-memory database that resets on restart.
 
-For a persistent local database, set the three variables in `.env.example` in your shell, set `PUBLIC_ORIGIN` if needed, and run `npm start`. Data is stored in ignored `data/visitors.sqlite`; schema migrations apply automatically. This loopback Node alternative records the socket peer IP and does not infer public visitor locations. Cloudflare Pages is the intended hosting platform.
+For a persistent local database, set the three variables in `.env.example` in your shell, set `PUBLIC_ORIGIN` if needed, and run `npm start`. Data is stored in ignored `data/visitors.sqlite`; schema migrations apply automatically. This loopback Node alternative records the socket peer IP and does not infer public visitor locations. Cloudflare Pages or Workers is the intended hosting platform.
 
 ## Build and source layout
 
@@ -94,7 +124,7 @@ For a persistent local database, set the three variables in `.env.example` in yo
 - `drizzle/*.sql`: D1 schema migrations.
 - `scripts/build.mjs`: combines the source into `dist/_worker.js` with an all-paths `_routes.json`.
 
-Deploy **only `dist` using Pages Git integration**. Do not use GitHub Pages, a static-only host, or the repository root as the public output: login validation and D1 require the server-side Worker. Protected HTML and images are embedded in the Worker rather than copied into public static assets. Unknown source paths return 404. Never commit runtime secrets, databases or exported visitor logs. The repository itself contains the presentation source; its GitHub visibility is independent of the deployed website's login gate.
+For Pages, deploy **only `dist` using Pages Git integration**. For Workers, deploy the module using `wrangler.json` as described above. Do not use GitHub Pages, a static-only host, or the repository root as the public output: login validation and D1 require the server-side Worker. Protected HTML and images are embedded in the Worker rather than copied into public static assets. Unknown source paths return 404. Never commit runtime secrets, databases or exported visitor logs. The repository itself contains the presentation source; its GitHub visibility is independent of the deployed website's login gate.
 
 Financial figures and assumptions are unchanged. See `content-notes.json` and the presentation notes.
 
