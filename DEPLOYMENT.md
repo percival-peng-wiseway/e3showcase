@@ -24,6 +24,6 @@ The original `main` branch and its `e3showcase` Worker, custom domain and visito
 
 ## Login notifications
 
-Requested primary recipient: `percival@wiseway.ai`; CC: `jerry@e3energy.com.au`. Both are fixed in server code. The independent `e3-invest-platform-login-alerts` Resend key (ID `e2afb913-62d2-4847-b4e5-0263105a10c2`) is created with Sending access restricted to `wiseway.ai` and installed as the Worker `RESEND_API_KEY` Secret. `LOGIN_NOTIFICATION_FROM` is set to `E3 Investment Platform <notifications@wiseway.ai>`. All five runtime Secrets are present. No test email was initiated; recipient inbox delivery is not independently verified.
+Requested primary recipient: `percival@wiseway.ai`; CC: `jerry.lu@wiseway.ai`. Both are fixed in server code. The independent `e3-invest-platform-login-alerts` Resend key (ID `e2afb913-62d2-4847-b4e5-0263105a10c2`) is created with Sending access restricted to `wiseway.ai` and installed as the Worker `RESEND_API_KEY` Secret. `LOGIN_NOTIFICATION_FROM` is set to `E3 Investment Platform <notifications@wiseway.ai>`. All five runtime Secrets are present. No test email was initiated; recipient inbox delivery is not independently verified.
 
 For later updates, check out `invest_version`, run `npm test`, apply any new D1 migrations using Wrangler, and deploy using the tracked configuration. Do not change the production source branch to `main` or use the existing Latrobe database ID.

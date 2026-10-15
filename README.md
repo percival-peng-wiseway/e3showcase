@@ -32,6 +32,6 @@ Runtime secrets: `VIEWER_PASSWORD`, `ADMIN_PASSWORD`, `SESSION_SECRET` (random, 
 
 ## Login notifications
 
-The email provider secrets are installed. Visitor logins send a plain-text notification to `percival@wiseway.ai`, CC `jerry@e3energy.com.au`. Recipients are fixed in server code. Notifications include the name, login time, IP and approximate location. Owner sign-ins and page navigation do not send notifications. Provider acceptance is stored separately from inbox delivery; delivery is not implied by configuration. Missing notification settings do not prevent sign-in. The restricted provider key must allow sending only from the verified `wiseway.ai` domain.
+The email provider secrets are installed. Visitor logins send a plain-text notification to `percival@wiseway.ai`, CC `jerry.lu@wiseway.ai`. Recipients are fixed in server code. Notifications include the name, login time, IP and approximate location. Owner sign-ins and page navigation do not send notifications. Provider acceptance is stored separately from inbox delivery; delivery is not implied by configuration. Missing notification settings do not prevent sign-in. The restricted provider key must allow sending only from the verified `wiseway.ai` domain.
 
 Investor content is taken from the supplied complete platform server package. `fund.html`, `latrobe.html`, `fund-notes.json` and `content-notes.json` retain its investment assumptions; deployment does not independently verify or change them.
