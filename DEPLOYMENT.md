@@ -20,7 +20,7 @@ Follow the complete setup in [README.md](README.md#cloudflare-pages-setup).
 - Owner dashboard: `/admin`.
 - Optional login email alerts to `percival@wiseway.ai`: add `RESEND_API_KEY` (Secret) and `LOGIN_NOTIFICATION_FROM` (verified Resend sender), then redeploy. See the README login email section. Provider acceptance is not inbox delivery; real delivery remains to be verified after configuration.
 
-The local preview and functional tests use synthetic visitor records. Production deployment and actual Cloudflare IP/geolocation capture must be checked after the user deploys. No Cloudflare account settings or production database have been changed by preparing this repository.
+The local preview and automated tests use synthetic visitor records. The production setup and live checks completed on 15 October 2026 are recorded below.
 
 After deployment, test a fresh browser: wrong password, blank name, successful name + e3open login, inaccessible protected images before login, owner-only records/CSV, and the actual recorded IP/location. Location can be unavailable or approximate and may reflect a VPN/network gateway. Revisit the owner dashboard after another deployment to confirm records remain in the bound D1 database.
 
@@ -33,4 +33,5 @@ After deployment, test a fresh browser: wrong password, blank name, successful n
 - Viewer/admin passwords and a random session signing secret are installed as Cloudflare Secrets. Secret values are not stored in the repository.
 - Wrangler configuration retains the current custom domain, workers.dev endpoint and D1 binding for future deployments.
 - Fourteen live checks passed: gate, failed/successful login, protected report/images, owner dashboard, D1 IP/location record, CSV access and logout. Synthetic verification login records were removed.
-- Resend settings are still absent; login emails remain disabled pending `RESEND_API_KEY` and a verified `LOGIN_NOTIFICATION_FROM`.
+- Resend login alerts are enabled. A dedicated `e3showcase-login-alerts` key with Sending access restricted to `wiseway.ai` is stored only in the Cloudflare `RESEND_API_KEY` Secret. The sender is `E3 Showcase <notifications@wiseway.ai>`.
+- A clearly labelled test visitor login triggered an email to `percival@wiseway.ai` at 11:39 AEDT on 15 October 2026. Resend reported `delivered`, and the matching email was verified in the recipient Gmail account with the `INBOX` label. The synthetic test login remains labelled TEST in the owner records.
