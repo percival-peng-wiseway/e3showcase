@@ -22,7 +22,6 @@ async function auditRows(env,limit,offset){return (await env.DB.prepare("SELECT 
 function csvCell(value){let text=String(value??'');if(/^[\s]*[=+\-@]/.test(text))text="'"+text;return '"'+text.replaceAll('"','""')+'"';}
 export default {
  async fetch(request,env,ctx){
-  void ctx;
   try{
    const url=new URL(request.url);const path=url.pathname;
    if(path==='/health')return json({ok:isConfigured(env)},isConfigured(env)?200:503);
@@ -44,16 +43,21 @@ export default {
      const visitId=crypto.randomUUID();const iso=new Date().toISOString();const cf=request.cf||{};
      await env.DB.batch([
       env.DB.prepare('DELETE FROM attempts WHERE created_at<?').bind(now-900000),
-      env.DB.prepare('INSERT INTO visits (id,email,name,organization,role,started_at,last_seen_at,active_seconds,ip_address,country,region,city,timezone) VALUES (?,?,?,?,?,?,?,0,?,?,?,?,?)').bind(visitId,email,name,organization,role,iso,iso,ip,clean(cf.country,8),clean(cf.region,160),clean(cf.city,160),clean(cf.timezone,100))
+      env.DB.prepare('INSERT INTO visits (id,email,name,organization,role,started_at,last_seen_at,active_seconds,ip_address,country,region,city,timezone,notification_status) VALUES (?,?,?,?,?,?,?,0,?,?,?,?,?,?)').bind(visitId,email,name,organization,role,iso,iso,ip,clean(cf.country,8),clean(cf.region,160),clean(cf.city,160),clean(cf.timezone,100),role==='viewer'?'pending':'not_requested')
      ]);
-    const session=await token({visitId,role,exp:now+14400000},env);return redirect(role==='admin'?'/admin':'/',cookie(session));
+    const session=await token({visitId,role,exp:now+14400000},env);
+    if(role==='viewer'){
+     const notification=notifyLogin(env,{id:visitId,name,started_at:iso,ip_address:ip,country:clean(cf.country,8),region:clean(cf.region,160),city:clean(cf.city,160),timezone:clean(cf.timezone,100)});
+     if(ctx?.waitUntil)ctx.waitUntil(notification);else await notification;
+    }
+    return redirect(role==='admin'?'/admin':'/',cookie(session));
    }
    const session=await readSession(request,env);
    if(path==='/admin')return response(session?.role==='admin'?ADMIN_PAGE:(url.searchParams.has('error')?ADMIN_GATE_ERROR:ADMIN_GATE));
    if(path.startsWith('/api/logs')){
     if(!session)return json({error:'Authentication required'},401);if(session.role!=='admin')return json({error:'Administrator required'},403);if(request.method!=='GET')return json({error:'Method not allowed'},405);
     if(path==='/api/logs.csv'){
-     const rows=await auditRows(env,20000,0);const fields=['id','name','ip_address','country','region','city','timezone','started_at','last_seen_at','active_seconds','chapters'];const header=['Session ID','Self-declared name','IP address','Country code','Region (approximate)','City (approximate)','Visitor timezone','Started UTC','Last seen UTC','Visible seconds estimate','Chapters'];const csv='\uFEFF'+[header.map(csvCell).join(','),...rows.map(r=>fields.map(f=>csvCell(r[f])).join(','))].join('\r\n');return response(csv,200,'text/csv; charset=utf-8',{'content-disposition':'attachment; filename="e3-latrobe-visitors.csv"'});
+     const rows=await auditRows(env,20000,0);const fields=['id','name','ip_address','country','region','city','timezone','started_at','last_seen_at','active_seconds','chapters','notification_status','notification_error'];const header=['Session ID','Self-declared name','IP address','Country code','Region (approximate)','City (approximate)','Visitor timezone','Started UTC','Last seen UTC','Visible seconds estimate','Chapters','Email notification status','Email notification error'];const csv='\uFEFF'+[header.map(csvCell).join(','),...rows.map(r=>fields.map(f=>csvCell(r[f])).join(','))].join('\r\n');return response(csv,200,'text/csv; charset=utf-8',{'content-disposition':'attachment; filename="e3-latrobe-visitors.csv"'});
     }
     if(path!=='/api/logs')return json({error:'Not found'},404);
      const offset=Math.max(0,Math.min(100000,parseInt(url.searchParams.get('offset')||'0',10)||0));const [rows,stats]=await Promise.all([auditRows(env,100,offset),env.DB.prepare("SELECT count(*) AS total,count(DISTINCT name) AS unique_count FROM visits WHERE role='viewer'").first()]);return json({rows,total:stats.total,unique:stats.unique_count,hasMore:offset+rows.length<stats.total});

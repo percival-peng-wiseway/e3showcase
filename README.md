@@ -6,14 +6,15 @@ Bilingual project presentation with a matching name-and-password login, server-s
 
 1. Connect this GitHub repository in **Workers & Pages → Create → Pages → Connect to Git**.
 2. Select branch **main**, framework preset **None**, build command **`npm run build`**, build output directory **`dist`**, and leave the root directory blank. Use Node 22 or newer (set `NODE_VERSION=22` if needed).
-3. In **Storage & databases → D1**, create a database named **`e3showcase-visitors`**. Apply both SQL files in order using Wrangler:
+3. In **Storage & databases → D1**, create a database named **`e3showcase-visitors`**. Apply all three SQL files in order using Wrangler:
 
    ```sh
    npx wrangler d1 execute e3showcase-visitors --remote --file=drizzle/0000_access_log.sql
    npx wrangler d1 execute e3showcase-visitors --remote --file=drizzle/0001_login_location.sql
+   npx wrangler d1 execute e3showcase-visitors --remote --file=drizzle/0002_login_notifications.sql
    ```
 
-   Alternatively, run the contents of those two files, in order, in the database's **Console**. Apply them once. Existing installations with the original visits/events/attempts tables need only `0001_login_location.sql`.
+   Alternatively, run the contents of those three files, in order, in the database's **Console**. Apply them once. Existing installations with the original visits/events/attempts tables need `0001_login_location.sql` and `0002_login_notifications.sql`. If location tracking is already installed, apply only `0002_login_notifications.sql`.
 4. In the Pages project's **Settings → Bindings**, add a **D1 database** binding named **`DB`** pointing to that database.
 5. In **Settings → Variables and Secrets**, add these runtime values:
 
@@ -46,6 +47,30 @@ Successful logins store the name, UTC login time, IP address, country code, regi
 **IP location is approximate**, can be unavailable, and may reflect a VPN, corporate gateway or mobile network. It is not a verified street address or identity. Local development has no Cloudflare geolocation and displays unavailable values. Owner records show times in Australia/Melbourne; CSV times are UTC. Counts of distinct names do not establish unique people.
 
 Existing chapter and visible-tab duration tracking is retained. CSV exports up to 20,000 visitor sessions and escapes spreadsheet formula prefixes. Administrator logins are excluded from visitor statistics. Sessions expire after four hours; eight failed attempts per role and IP trigger a 15-minute limit. Sessions use signed Secure/HttpOnly/SameSite cookies. Visitor passwords cannot read logs.
+
+## Login email notifications (Resend)
+
+Every successful **visitor** login can send a plain-text email to **percival@wiseway.ai**. Failed passwords, administrator logins and page views do not trigger emails. The notification includes the self-declared name, login time in Australia/Melbourne and UTC, IP address, approximate city/region/country and visitor timezone. Passwords, session cookies and API keys are never included. The recipient is fixed on the server and cannot be changed through the login form.
+
+To enable:
+
+1. In [Resend](https://resend.com/domains), verify a domain you control and select a sender on that domain. An example format is `E3 Showcase <notifications@your-verified-domain.com>`; replace this with your actual verified sender.
+2. Create a Resend API key with sending access for that domain.
+3. In Cloudflare Pages → Settings → Variables and Secrets, add:
+
+   | Name | Value |
+   | --- | --- |
+   | `RESEND_API_KEY` | Your Resend API key, stored as a **Secret** |
+   | `LOGIN_NOTIFICATION_FROM` | Your verified sender address, optionally with a display name |
+
+4. Apply `drizzle/0002_login_notifications.sql` once if the database already has the first two migrations, then **redeploy** Pages.
+5. Log in as a visitor and check both your inbox and `/admin`. The dashboard and CSV show the notification status. `Accepted by Resend` confirms provider acceptance, not inbox delivery. If the email does not arrive, check Resend delivery events and your mailbox's spam/quarantine filters.
+
+Cloudflare sends the notification in the background via `ctx.waitUntil`, so provider delays do not delay visitor access. Transient network/server errors receive one retry with the same Resend idempotency key. Each request has an eight-second timeout. Permanent errors or missing mail configuration do not block login; the database retains `failed` or `not_configured` status. There is no scheduled resend queue: failed or older notifications are not automatically replayed. No real email has been sent or inbox delivery verified by the repository's mock-provider tests.
+
+Keep these settings in production only unless you want preview logins to send real emails. `npm run dev` intentionally uses no mail credentials and sends no emails. The standalone `npm start` alternative reads the two settings from the environment.
+
+References: [Resend Send Email API](https://resend.com/docs/api-reference/emails/send-email), [Resend idempotency keys](https://resend.com/docs/dashboard/emails/idempotency-keys), [Cloudflare background tasks](https://developers.cloudflare.com/workers/runtime-apis/context/#waituntil).
 
 ## Local development and checks
 

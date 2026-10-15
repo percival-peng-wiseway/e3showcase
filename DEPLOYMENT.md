@@ -10,10 +10,11 @@ Follow the complete setup in [README.md](README.md#cloudflare-pages-setup).
 - Build: `npm run build`
 - Output: `dist`
 - D1 binding: `DB`
-- Apply `drizzle/0000_access_log.sql`, then `drizzle/0001_login_location.sql` once.
+- Apply `drizzle/0000_access_log.sql`, then `drizzle/0001_login_location.sql`, then `drizzle/0002_login_notifications.sql` once.
 - Runtime secrets: `VIEWER_PASSWORD=e3open`, a separate `ADMIN_PASSWORD`, and a random `SESSION_SECRET` of 32+ characters.
 - Redeploy after adding bindings and secrets.
 - Owner dashboard: `/admin`.
+- Optional login email alerts to `percival@wiseway.ai`: add `RESEND_API_KEY` (Secret) and `LOGIN_NOTIFICATION_FROM` (verified Resend sender), then redeploy. See the README login email section. Provider acceptance is not inbox delivery; real delivery remains to be verified after configuration.
 
 The local preview and functional tests use synthetic visitor records. Production deployment and actual Cloudflare IP/geolocation capture must be checked after the user deploys. No Cloudflare account settings or production database have been changed by preparing this repository.
 
