@@ -36,6 +36,7 @@ try {
   check(response.status === 303 && response.headers.get('set-cookie') && calls.length === 1, 'Successful visitor login queues one email');
   check(calls[0].url === 'https://api.resend.com/emails' && calls[0].options.headers.authorization === 'Bearer ' + env.RESEND_API_KEY, 'Authenticated server-side Resend request');
   check(calls[0].payload.to[0] === 'percival@wiseway.ai' && calls[0].payload.to.length === 1, 'Notification uses the requested fixed recipient');
+  check(calls[0].payload.cc?.length === 1 && calls[0].payload.cc[0] === 'jerry.lu@wiseway.ai', 'Notification copies only the confirmed CC recipient');
   const text = calls[0].payload.text;
   check(text.includes('Mail Test Visitor') && text.includes('203.0.113.10') && text.includes('Melbourne, Victoria, AU') && text.includes('Australia/Melbourne') && text.includes('(UTC)'), 'Email includes name, IP, location and timestamp in local time and UTC');
   check(!JSON.stringify(calls[0].payload).includes('e3open') && !JSON.stringify(calls[0].payload).includes(env.SESSION_SECRET) && !JSON.stringify(calls[0].payload).includes(env.RESEND_API_KEY), 'Email does not disclose passwords, signing secrets or API keys');

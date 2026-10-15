@@ -36,4 +36,4 @@ After deployment, test a fresh browser: wrong password, blank name, successful n
 - Resend login alerts are enabled. A dedicated `e3showcase-login-alerts` key with Sending access restricted to `wiseway.ai` is stored only in the Cloudflare `RESEND_API_KEY` Secret. The sender is `E3 Showcase <notifications@wiseway.ai>`.
 - A clearly labelled test visitor login triggered an email to `percival@wiseway.ai` at 11:39 AEDT on 15 October 2026. Resend reported `delivered`, and the matching email was verified in the recipient Gmail account with the `INBOX` label. The synthetic test login remains labelled TEST in the owner records.
 
-- Login notifications now CC `jerry@e3energy.com.au`, retaining `percival@wiseway.ai` as the primary recipient. This recipient change was deployed without sending a test email, as requested.
+- Login notifications now CC `jerry.lu@wiseway.ai`, retaining `percival@wiseway.ai` as the primary recipient. This recipient change was deployed without sending a test email, as requested.

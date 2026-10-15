@@ -1,6 +1,6 @@
 // Server-only login notifications. The recipient cannot be supplied by a visitor.
 const LOGIN_NOTIFICATION_TO = 'percival@wiseway.ai';
-const LOGIN_NOTIFICATION_CC = 'jerry@e3energy.com.au';
+const LOGIN_NOTIFICATION_CC = 'jerry.lu@wiseway.ai';
 function notificationConfigured(env) {
   return Boolean(env.RESEND_API_KEY && env.LOGIN_NOTIFICATION_FROM);
 }
