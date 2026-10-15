@@ -2,7 +2,7 @@ const CHAPTER_IDS=["opportunity", "returns", "model", "revenue", "client", "prot
 
 
 const encoder = new TextEncoder();
-const SECURE_HEADERS = {'cache-control':'no-store, private','x-content-type-options':'nosniff','x-frame-options':'DENY','referrer-policy':'no-referrer','permissions-policy':'camera=(), microphone=(), geolocation=()','content-security-policy':"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"};
+const SECURE_HEADERS = {'cache-control':'no-store, private','x-content-type-options':'nosniff','x-frame-options':'DENY','referrer-policy':'same-origin','permissions-policy':'camera=(), microphone=(), geolocation=()','content-security-policy':"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"};
 function response(body,status=200,type='text/html; charset=utf-8',headers={}){return new Response(body,{status,headers:{...SECURE_HEADERS,'content-type':type,...headers}});}
 function json(data,status=200){return response(JSON.stringify(data),status,'application/json; charset=utf-8');}
 function redirect(path,cookie){return response('',303,'text/plain',{'location':path,...(cookie?{'set-cookie':cookie}:{})});}

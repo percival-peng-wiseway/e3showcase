@@ -25,6 +25,10 @@ const fields = {name:'Jane Investor', password: 'e3open'};
 try {
   let r = await request('/');
   const gate = await r.text();
+  check(r.headers.get('referrer-policy') === 'same-origin', 'Login gate preserves same-origin form Origin headers for native browser submissions');
+  const opaque = await login(fields, {origin:'null'});
+  check(opaque.status === 403 && !opaque.headers.get('set-cookie'), 'Opaque Origin is still rejected rather than allowlisted');
+  check((await request('/admin')).headers.get('referrer-policy') === 'same-origin', 'Administrator form has the same browser-compatible referrer policy');
   check(!gate.includes('name="email"') && !gate.includes('name="organization"') && gate.includes('name="name"'), 'Gate asks only for name and password');
   for (const name of ['', '   ', '\u0000']) {
     r = await login({...fields, name}, {'cf-connecting-ip':'192.0.2.10'});
