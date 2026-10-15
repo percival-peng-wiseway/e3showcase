@@ -15,20 +15,7 @@ If Cloudflare shows **Create an app** with a **Deploy command**, you are using t
 
 After the first successful upload, configure the same runtime secrets and D1 schema as below in the **Worker** settings. `keep_vars` preserves dashboard variables; encrypted secrets are also retained. A successful code upload alone does not configure the database or passwords.
 
-For persistent D1 bindings across subsequent Wrangler deployments, add the real database ID to `wrangler.json` (retain the existing fields):
-
-```json
-"d1_databases": [
-  {
-    "binding": "DB",
-    "database_name": "e3showcase-visitors",
-    "database_id": "REPLACE_WITH_YOUR_ACTUAL_D1_DATABASE_ID",
-    "migrations_dir": "drizzle"
-  }
-]
-```
-
-Get the actual ID from the D1 dashboard; do not deploy the placeholder. Apply the three SQL migrations once as described below. If a database is already initialized, apply only the migrations it does not have. Then configure `VIEWER_PASSWORD`, `ADMIN_PASSWORD`, `SESSION_SECRET`, and optionally the two Resend settings. The website returns `Service is not configured` until its required runtime settings exist.
+The checked-in configuration now binds `DB` to the existing `e3showcase-visitors` database and retains the `latrobe-investers.e3energy.com.au` custom domain. The production database has all three migrations applied and the required runtime secrets are installed. For later migrations, use `npx wrangler d1 migrations apply DB --remote`; do not rerun the initial schema files on this database. For deployment to another Cloudflare account, replace the account ID, D1 database ID and custom domain with your own values.
 
 This fixes a Workers build that fails with **Uploading a Pages _worker.js file as an asset**. It does not require switching to Pages. If you prefer Pages, use the separate Pages setup below.
 

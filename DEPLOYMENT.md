@@ -23,3 +23,14 @@ Follow the complete setup in [README.md](README.md#cloudflare-pages-setup).
 The local preview and functional tests use synthetic visitor records. Production deployment and actual Cloudflare IP/geolocation capture must be checked after the user deploys. No Cloudflare account settings or production database have been changed by preparing this repository.
 
 After deployment, test a fresh browser: wrong password, blank name, successful name + e3open login, inaccessible protected images before login, owner-only records/CSV, and the actual recorded IP/location. Location can be unavailable or approximate and may reflect a VPN/network gateway. Revisit the owner dashboard after another deployment to confirm records remain in the bound D1 database.
+
+## Verified live setup — 15 October 2026
+
+- Worker: `e3showcase` in the configured Cloudflare account.
+- Live URL: https://latrobe-investers.e3energy.com.au
+- Worker URL: https://e3showcase.percival-0ae.workers.dev
+- D1 `DB` is bound to `e3showcase-visitors` (`c2f6d308-4906-4bb7-b14d-3bc6bf247867`); all three migrations were applied with Wrangler's migration ledger. Do not rerun the raw schema files on this initialized database. Apply future migrations with `wrangler d1 migrations apply DB --remote`.
+- Viewer/admin passwords and a random session signing secret are installed as Cloudflare Secrets. Secret values are not stored in the repository.
+- Wrangler configuration retains the current custom domain, workers.dev endpoint and D1 binding for future deployments.
+- Fourteen live checks passed: gate, failed/successful login, protected report/images, owner dashboard, D1 IP/location record, CSV access and logout. Synthetic verification login records were removed.
+- Resend settings are still absent; login emails remain disabled pending `RESEND_API_KEY` and a verified `LOGIN_NOTIFICATION_FROM`.

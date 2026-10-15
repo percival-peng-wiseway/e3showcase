@@ -2,5 +2,21 @@
   "name": "e3showcase",
   "main": "dist/_worker.js",
   "compatibility_date": "2026-10-15",
-  "keep_vars": true
+  "keep_vars": true,
+  "account_id": "0ae1d18172752871ccd9264d758559b0",
+  "workers_dev": true,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "e3showcase-visitors",
+      "database_id": "c2f6d308-4906-4bb7-b14d-3bc6bf247867",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "routes": [
+    {
+      "pattern": "latrobe-investers.e3energy.com.au",
+      "custom_domain": true
+    }
+  ]
 }
