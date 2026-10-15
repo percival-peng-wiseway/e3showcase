@@ -25,7 +25,7 @@ const fields = {name:'Jane Investor', password: 'e3open'};
 try {
   let r = await request('/');
   const gate = await r.text();
-  check(!gate.includes('name="email"') && !gate.includes('name="organization"') && gate.includes('name="name"') && gate.includes('IP address'), 'Gate asks only for name and password and discloses IP collection');
+  check(!gate.includes('name="email"') && !gate.includes('name="organization"') && gate.includes('name="name"'), 'Gate asks only for name and password');
   for (const name of ['', '   ', '\u0000']) {
     r = await login({...fields, name}, {'cf-connecting-ip':'192.0.2.10'});
     check(r.status === 303 && !r.headers.get('set-cookie'), 'Missing, whitespace and control-only names rejected');

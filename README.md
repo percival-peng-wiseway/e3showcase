@@ -41,7 +41,7 @@ The first automatic build can finish before bindings are configured; it will sho
 - `/logout`: clear the current browser session.
 - `/health`: report whether runtime bindings and secrets are configured.
 
-Successful logins store the name, UTC login time, IP address, country code, region, city and visitor timezone when supplied by Cloudflare. The login form discloses this collection. Cloudflare's `CF-Connecting-IP` (or original IPv6 with Pseudo IPv4) supplies the IP; `request.cf` supplies location. The browser cannot choose the stored IP or location via form fields. There are no third-party location or analytics requests.
+Successful logins store the name, UTC login time, IP address, country code, region, city and visitor timezone when supplied by Cloudflare. Cloudflare's `CF-Connecting-IP` (or original IPv6 with Pseudo IPv4) supplies the IP; `request.cf` supplies location. The browser cannot choose the stored IP or location via form fields. There are no third-party location or analytics requests.
 
 **IP location is approximate**, can be unavailable, and may reflect a VPN, corporate gateway or mobile network. It is not a verified street address or identity. Local development has no Cloudflare geolocation and displays unavailable values. Owner records show times in Australia/Melbourne; CSV times are UTC. Counts of distinct names do not establish unique people.
 
