@@ -8,7 +8,7 @@ Cloudflare Worker deployment from the `invest_version` branch of `percival-peng-
 - `/projects/latrobe`: complete 12-chapter Latrobe demonstration project, using the same session.
 - `/admin`: separate administrator sign-in, visitor records and CSV export.
 
-The viewer and owner login pages are reused from the existing Latrobe site. Viewers enter only a name and shared password. Passwords are stored as Cloudflare Secrets; see the owner's private handoff for the supplied package credentials. No passwords or private owner instructions are included in this repository.
+The viewer and owner login pages are reused from the existing Latrobe site. Viewers enter only a name and shared password. Passwords are stored as Cloudflare Secrets; the credentials were unified with the existing Latrobe site after owner confirmation. No passwords or private owner instructions are included in this repository.
 
 The platform records self-declared names, UTC login times, Cloudflare IP/approximate location, viewed fund/project chapters and estimated visible time. The dashboard uses Australia/Melbourne time. Viewer sessions cannot access records or CSV files. Session cookies are signed, Secure and HttpOnly, expire after four hours, and use a signing secret unique to this deployment. Native login forms retain same-origin referrer information for browser compatibility.
 
@@ -32,6 +32,6 @@ Runtime secrets: `VIEWER_PASSWORD`, `ADMIN_PASSWORD`, `SESSION_SECRET` (random, 
 
 ## Login notifications
 
-Once the email provider secrets are installed, visitor logins send a plain-text notification to `percival@wiseway.ai`, CC `jerry@e3energy.com.au`. Recipients are fixed in server code. Notifications include the name, login time, IP and approximate location. Owner sign-ins and page navigation do not send notifications. Provider acceptance is stored separately from inbox delivery; delivery is not implied by configuration. Missing notification settings do not prevent sign-in. The restricted provider key must allow sending only from the verified `wiseway.ai` domain.
+The email provider secrets are installed. Visitor logins send a plain-text notification to `percival@wiseway.ai`, CC `jerry@e3energy.com.au`. Recipients are fixed in server code. Notifications include the name, login time, IP and approximate location. Owner sign-ins and page navigation do not send notifications. Provider acceptance is stored separately from inbox delivery; delivery is not implied by configuration. Missing notification settings do not prevent sign-in. The restricted provider key must allow sending only from the verified `wiseway.ai` domain.
 
 Investor content is taken from the supplied complete platform server package. `fund.html`, `latrobe.html`, `fund-notes.json` and `content-notes.json` retain its investment assumptions; deployment does not independently verify or change them.
