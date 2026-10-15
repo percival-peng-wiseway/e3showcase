@@ -67,7 +67,7 @@ Existing chapter and visible-tab duration tracking is retained. CSV exports up t
 
 ## Login email notifications (Resend)
 
-Every successful **visitor** login can send a plain-text email to **percival@wiseway.ai**. Failed passwords, administrator logins and page views do not trigger emails. The notification includes the self-declared name, login time in Australia/Melbourne and UTC, IP address, approximate city/region/country and visitor timezone. Passwords, session cookies and API keys are never included. The recipient is fixed on the server and cannot be changed through the login form.
+Every successful **visitor** login can send a plain-text email to **percival@wiseway.ai**, with **jerry@e3energy.com.au** copied (CC). Failed passwords, administrator logins and page views do not trigger emails. The notification includes the self-declared name, login time in Australia/Melbourne and UTC, IP address, approximate city/region/country and visitor timezone. Passwords, session cookies and API keys are never included. The recipient and CC address are fixed on the server and cannot be changed through the login form.
 
 To enable:
 

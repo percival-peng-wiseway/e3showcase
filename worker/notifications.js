@@ -1,5 +1,6 @@
 // Server-only login notifications. The recipient cannot be supplied by a visitor.
 const LOGIN_NOTIFICATION_TO = 'percival@wiseway.ai';
+const LOGIN_NOTIFICATION_CC = 'jerry@e3energy.com.au';
 function notificationConfigured(env) {
   return Boolean(env.RESEND_API_KEY && env.LOGIN_NOTIFICATION_FROM);
 }
@@ -20,6 +21,7 @@ async function notifyLogin(env, visit) {
     const payload = JSON.stringify({
       from: env.LOGIN_NOTIFICATION_FROM,
       to: [LOGIN_NOTIFICATION_TO],
+      cc: [LOGIN_NOTIFICATION_CC],
       subject: 'E3 Showcase · New login / 新访客登录 · ' + visit.name,
       text: [
         'A visitor signed in to E3 Showcase. / 有访客登录 E3 Showcase。', '',
